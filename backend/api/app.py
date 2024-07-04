@@ -1,5 +1,6 @@
-from flask import Config, Flask
+from flask import Flask
 from alchemical.flask import Alchemical
+from config import Config
 
 db = Alchemical()
 
