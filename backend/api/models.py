@@ -2,9 +2,10 @@ from typing import Optional
 import sqlalchemy as sa
 from api import db
 from sqlalchemy import orm as so
+from alchemical import Model
 
 
-class User(db.Model):
+class User(Model):
     __tablename__ = "users"
 
     id: so.Mapped[int] = so.mapped_column(primary_key=True)

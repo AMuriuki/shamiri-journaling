@@ -1,10 +1,13 @@
 from flask import Flask
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from config import Config
+from apifairy import APIFairy
+from alchemical.flask import Alchemical
+from flask_marshmallow import Marshmallow
 
-db = SQLAlchemy()
-migrate = Migrate()
+
+db = Alchemical()
+ma = Marshmallow()
+apifairy = APIFairy()
 
 
 def create_app(config_class=Config):
@@ -12,6 +15,12 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     db.init_app(app)
-    migrate.init_app(app, db)
+    ma.init_app(app)
+    apifairy.init_app(app)
+
+    # api-endpoint blueprints
+    from api.users import users
+
+    app.register_blueprint(users, url_prefix="/api")
 
     return app
