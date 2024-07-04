@@ -1,0 +1,2 @@
+FLASK_APP=shamiri.py
+FLASK_DEBUG=1
