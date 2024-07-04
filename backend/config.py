@@ -5,4 +5,4 @@ load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    pass
+    ALCHEMICAL_DATABASE_URL = os.environ.get('DATABASE_URL')
