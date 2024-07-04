@@ -17,4 +17,4 @@ def new_user(args):
     user = User(**args)
     db.session.add(user)
     db.session.commit()
-    return {"message": "working"}
+    return user

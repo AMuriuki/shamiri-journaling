@@ -1,6 +1,6 @@
 from api import ma, db
 from api.models import User
-from marshmallow import validate
+from marshmallow import validate, post_dump
 
 
 class UserSchema(ma.SQLAlchemySchema):
@@ -12,3 +12,4 @@ class UserSchema(ma.SQLAlchemySchema):
     email = ma.auto_field(
         required=True, validate=[validate.Length(max=120), validate.Email()]
     )
+    
