@@ -12,6 +12,5 @@ def as_bool(value):
 
 
 class Config:
-    print(os.environ.get("DATABASE_URL"))
     ALCHEMICAL_DATABASE_URL = os.environ.get("DATABASE_URL")
     ALCHEMICAL_ENGINE_OPTIONS = {"echo": as_bool(os.environ.get("SQL_ECHO", "false"))}
