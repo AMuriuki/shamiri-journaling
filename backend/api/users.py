@@ -1,8 +1,9 @@
 from api import db
 from api.models import User
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from api.schemas import UserSchema
 from apifairy import body, response
+from sqlalchemy.exc import IntegrityError
 
 users = Blueprint("users", __name__)
 user_schema = UserSchema()
@@ -13,8 +14,11 @@ user_schema = UserSchema()
 @response(user_schema, 201)
 def new_user(args):
     """Register a new user"""
-    print(args)
     user = User(**args)
     db.session.add(user)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "User already exists"}), 400
     return user
