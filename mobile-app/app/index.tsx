@@ -28,7 +28,7 @@ export default function App() {
                             className='text-3xl text-white font-bold text-center text-pbold'>
                             Gratitude Journal
                         </Text>
-                        <Text className='text-sm text-secondary font-pregular mt-7 text-center'>
+                        <Text className='text-sm text-gray-100 font-pregular mt-7 text-center'>
                             Keeping a log of what you're thankful for can lower stress, help you sleep better, and may even reduce the risk of heart disease
                         </Text>
                     </View>
