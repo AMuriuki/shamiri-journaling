@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { TabIconProps } from '../types/TabProps';
+import { TabIconProps } from '../../types/TabProps';
 import { View, Image, Text } from 'react-native';
 import icons from "../../constants/icons";
 
