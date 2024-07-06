@@ -1,12 +1,15 @@
-import { View, Text, ScrollView, Image, Dimensions } from 'react-native'
+import { View, Text, ScrollView, Image, Dimensions, Alert } from 'react-native'
 import React, { useState } from 'react'
 import images from '@/constants/images'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '@/components/formField'
 import CustomButton from '@/components/customButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { useApi } from "../../contexts/ApiProvider";
 
 const SignUp = () => {
+
+  const api = useApi();
 
   const [form, setForm] = useState({
     username: "",
@@ -14,10 +17,29 @@ const SignUp = () => {
     password: ""
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const submit = () => {
+  const submit = async () => {
+    if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Fill all fields to sign up");
+      return;
+    }
 
+    setIsSubmitting(true);
+    try {
+      const data = await api.post('/users', {
+        username: form.username,
+        email: form.email,
+        password: form.password
+      });
+      if (!data.ok) {
+        router.replace("/home");
+      }
+    } catch (error: any) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -39,7 +61,7 @@ const SignUp = () => {
           </Text>
           <FormField
             title='Username'
-            value={form.email}
+            value={form.username}
             handleTextChange={(e) => setForm({ ...form, username: e })}
             otherStyles='mt-10'
           />
