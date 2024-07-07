@@ -27,4 +27,8 @@ def create_app(config_class=Config):
 
     app.register_blueprint(users, url_prefix="/api")
 
+    from api.tokens import tokens
+
+    app.register_blueprint(tokens, url_prefix="/api")
+
     return app
