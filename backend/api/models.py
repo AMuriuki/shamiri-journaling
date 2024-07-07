@@ -71,10 +71,6 @@ class User(Model):
     tokens: so.WriteOnlyMapped["Token"] = so.relationship(back_populates="user")
 
     @property
-    def has_password(self):
-        return self.password_hash is not None
-
-    @property
     def password(self):
         raise AttributeError("passwordis not a readable attribute")
 

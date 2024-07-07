@@ -14,7 +14,6 @@ class UserSchema(ma.SQLAlchemySchema):
         required=True, validate=[validate.Length(max=120), validate.Email()]
     )
     password = ma.String(required=True, load_only=True, validate=validate.Length(min=3))
-    has_password = ma.Boolean(dump_only=True)
 
     @validates("username")
     def validate_username(self, value):

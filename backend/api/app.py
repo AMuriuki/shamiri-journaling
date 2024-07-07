@@ -19,7 +19,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     ma.init_app(app)
     if app.config["USE_CORS"]:
-        cors.init_app(app)
+        cors.init_app(app, supports_credentials=True)
     apifairy.init_app(app)
 
     # api-endpoint blueprints
