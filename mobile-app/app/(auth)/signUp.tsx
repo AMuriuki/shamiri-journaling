@@ -6,6 +6,7 @@ import FormField from '@/components/formField'
 import CustomButton from '@/components/customButton'
 import { Link, router } from 'expo-router'
 import { useApi } from "../../contexts/ApiProvider";
+import { extractErrorMessages } from '@/ShamiriAPIClient'
 
 const SignUp = () => {
 
@@ -24,22 +25,21 @@ const SignUp = () => {
       Alert.alert("Error", "Fill all fields to sign up");
       return;
     }
-
     setIsSubmitting(true);
-    try {
-      const data = await api.post('/users', {
-        username: form.username,
-        email: form.email,
-        password: form.password
-      });
-      if (!data.ok) {
-        router.replace("/home");
-      }
-    } catch (error: any) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setIsSubmitting(false);
+    const data = await api.post('/new-user', {
+      username: form.username,
+      email: form.email,
+      password: form.password
+    });
+    console.log(extractErrorMessages(data.body));
+    if (!data.ok) {
+      const message = extractErrorMessages(data.body)
+      Alert.alert("Error", message);
+    } else {
+      Alert.alert('Success!', 'You have successfully registered');
+      router.replace("/home");
     }
+    setIsSubmitting(false);
   }
 
   return (

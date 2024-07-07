@@ -3,7 +3,7 @@ export interface RequestOptionsType {
     url: string;
     query?: Record<string, string>;
     headers?: Record<string, string>;
-    body?: any
+    body?: any;
 }
 
 export interface ResponseBodyType {
@@ -11,6 +11,8 @@ export interface ResponseBodyType {
     code?: number;
     message?: string;
     description?: string;
+    errors?: any;
+    messages?: any;
 }
 
 export interface APIResponseType {

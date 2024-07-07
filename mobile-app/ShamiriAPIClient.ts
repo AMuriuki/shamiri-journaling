@@ -1,7 +1,7 @@
 import { APIResponseType, ErrorHandlerType, RequestOptionsType } from "./types/APIClient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_API_URL = "https://3102-105-163-157-208.ngrok-free.app";
+const BASE_API_URL = "https://8943-105-163-157-208.ngrok-free.app";
 
 export default class ShamiriAPIClient {
     private base_url: string;
@@ -108,3 +108,41 @@ export default class ShamiriAPIClient {
     }
 
 }
+
+interface JsonMessages {
+    [key: string]: string[];
+}
+
+interface ErrorResponse {
+    messages?: {
+        json?: JsonMessages;
+    };
+    message?: string;
+    error?: string;
+}
+
+export const extractErrorMessages = (errorResponse: ErrorResponse | undefined): string => {
+    if (!errorResponse || typeof errorResponse !== 'object') {
+        return 'An unknown error occurred.';
+    }
+
+    let messages: string[] = [];
+
+    // Check for the specific structure in your error response
+    if (errorResponse.messages?.json) {
+        const jsonMessages = errorResponse.messages.json;
+        for (const key in jsonMessages) {
+            if (Array.isArray(jsonMessages[key]) && jsonMessages[key].length > 0) {
+                messages = [...messages, ...jsonMessages[key]];
+            }
+        }
+    } else if (errorResponse.message) {
+        messages.push(errorResponse.message);
+    } else if (errorResponse.error) {
+        messages.push(errorResponse.error);
+    } else {
+        messages.push('An unknown error occurred.');
+    }
+
+    return messages.join('\n');
+};
