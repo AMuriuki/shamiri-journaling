@@ -16,9 +16,5 @@ def new_user(args):
     """Register a new user"""
     user = User(**args)
     db.session.add(user)
-    try:
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
-        return jsonify({"error": "User already exists"}), 400
+    db.session.commit()
     return user
