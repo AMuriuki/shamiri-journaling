@@ -1,10 +1,8 @@
 import React from "react";
 import { UserType } from "./User";
 
-export interface GlobalContextType {
-    isAuthenticated: boolean;
-    setIsAuthenticated: (isAuthenticated: boolean) => void;
+export interface UserContextType {
     user: UserType | null;
     setUser: (user: UserType | null) => void;
-    isLoading: boolean;
+    login: (username: string, password: string) => Promise<string>;
 }

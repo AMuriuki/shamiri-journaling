@@ -31,7 +31,7 @@ const SignUp = () => {
       email: form.email,
       password: form.password
     });
-    console.log(extractErrorMessages(data.body));
+    
     if (!data.ok) {
       const message = extractErrorMessages(data.body)
       Alert.alert("Error", message);

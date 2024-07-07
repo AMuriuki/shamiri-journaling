@@ -18,7 +18,19 @@ export interface ResponseBodyType {
 export interface APIResponseType {
     ok: boolean;
     status: number;
-    body: ResponseBodyType
+    body: any
 }
 
 export type ErrorHandlerType = (response: APIResponseType) => void;
+
+export interface JsonMessages {
+    [key: string]: string[];
+}
+
+export interface ErrorResponse {
+    messages?: {
+        json?: JsonMessages;
+    };
+    message?: string;
+    error?: string;
+}

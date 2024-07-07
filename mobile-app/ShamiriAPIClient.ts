@@ -1,7 +1,7 @@
-import { APIResponseType, ErrorHandlerType, RequestOptionsType } from "./types/APIClient";
+import { APIResponseType, ErrorHandlerType, ErrorResponse, RequestOptionsType } from "./types/APIClient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_API_URL = "https://8943-105-163-157-208.ngrok-free.app";
+const BASE_API_URL = "https://c1cc-105-163-157-208.ngrok-free.app";
 
 export default class ShamiriAPIClient {
     private base_url: string;
@@ -15,8 +15,9 @@ export default class ShamiriAPIClient {
     private async request(options: RequestOptionsType) {
         let response = await this.requestInternal(options);
         if (response.status === 401 && options.url !== '/tokens') {
+            const accessToken = await AsyncStorage.getItem('accessToken');
             const refreshResponse = await this.put('/tokens', {
-                access_token: AsyncStorage.getItem('accessToken'),
+                access_token: accessToken,
             });
             if (refreshResponse.ok && refreshResponse.body?.access_token) {
                 AsyncStorage.setItem('accessToken', refreshResponse.body.access_token);
@@ -41,7 +42,7 @@ export default class ShamiriAPIClient {
                 method: options.method,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + AsyncStorage.getItem('accessToken'),
+                    'Authorization': 'Bearer ' + await AsyncStorage.getItem('accessToken'),
                     ...options.headers,
                 },
                 credentials: options.url === '/tokens' ? 'include' : 'omit',
@@ -103,22 +104,16 @@ export default class ShamiriAPIClient {
         AsyncStorage.removeItem('accessToken');
     }
 
-    public isAuthenticated(): boolean {
-        return AsyncStorage.getItem('accessToken') !== null;
+    public async isAuthenticated(): Promise<boolean> {
+        try {
+            const accessToken = await AsyncStorage.getItem('accessToken');
+            return accessToken !== null; 
+        } catch (error) {
+            console.error('Error checking authentication:', error);
+            return false; 
+        }
     }
 
-}
-
-interface JsonMessages {
-    [key: string]: string[];
-}
-
-interface ErrorResponse {
-    messages?: {
-        json?: JsonMessages;
-    };
-    message?: string;
-    error?: string;
 }
 
 export const extractErrorMessages = (errorResponse: ErrorResponse | undefined): string => {

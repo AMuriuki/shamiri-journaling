@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, Image, Dimensions } from 'react-native'
+import { View, Text, ScrollView, Image, Dimensions, Alert } from 'react-native'
 import React, { useState } from 'react'
 import images from '@/constants/images'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '@/components/formField'
 import CustomButton from '@/components/customButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { useUser } from '@/contexts/UserProvider'
 
 const SignIn = () => {
 
@@ -13,10 +14,27 @@ const SignIn = () => {
     password: ""
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useUser();
 
-  const submit = () => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
+  const submit = async () => {
+    if (form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
+    }
+
+    setIsSubmitting(true)
+
+    const result = await login(form.email, form.password);
+
+    if (result === 'fail') {
+      Alert.alert("Error", "Invalid credentials");
+    } else if (result === "ok") {
+      Alert.alert("Success", "Signed in successfully");
+      router.replace("/home");
+    }
+
+    setIsSubmitting(false);
   }
 
   return (
