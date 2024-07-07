@@ -47,6 +47,19 @@ class Token(Model):
         yesterday = naive_utcnow() - timedelta(days=1)
         db.session.execute(Token.delete().where(Token.refresh_expiration < yesterday))
 
+    @staticmethod
+    def from_jwt(access_token_jwt):
+        access_token = None
+        try:
+            access_token = jwt.decode(
+                access_token_jwt, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )["token"]
+            return db.session.scalar(
+                Token.select().filter_by(access_token=access_token)
+            )
+        except jwt.PyJWTError:
+            pass
+
 
 class User(Model):
     __tablename__ = "users"
@@ -77,3 +90,10 @@ class User(Model):
     def verify_password(self, password):
         if self.password_hash:
             return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def verify_access_token(access_token_jwt, refresh_token=None):
+        token = Token.from_jwt(access_token_jwt)
+        if token:
+            if token.access_expiration > naive_utcnow():
+                return token.user
