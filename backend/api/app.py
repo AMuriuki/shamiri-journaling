@@ -31,4 +31,8 @@ def create_app(config_class=Config):
 
     app.register_blueprint(tokens, url_prefix="/api")
 
+    from api.seed import seed
+
+    app.register_blueprint(seed)
+
     return app

@@ -69,6 +69,7 @@ class User(Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     tokens: so.WriteOnlyMapped["Token"] = so.relationship(back_populates="user")
+    entries: so.WriteOnlyMapped["Entry"] = so.relationship(back_populates="author")
 
     @property
     def password(self):
@@ -93,3 +94,27 @@ class User(Model):
         if token:
             if token.access_expiration > naive_utcnow():
                 return token.user
+
+
+class Category(Model):
+    __tablename__ = "categories"
+
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(120))
+    entries: so.WriteOnlyMapped["Entry"] = so.relationship(back_populates="category")
+
+
+class Entry(Model):
+    __tablename__ = "entries"
+
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    content: so.Mapped[str] = so.mapped_column(sa.Text())
+    title: so.Mapped[str] = so.mapped_column(sa.String(120))
+    timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=naive_utcnow)
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
+    category_id: so.Mapped[int] = so.mapped_column(
+        sa.ForeignKey(Category.id), index=True
+    )
+
+    author: so.Mapped["User"] = so.relationship(back_populates="entries")
+    category: so.Mapped["Category"] = so.relationship(back_populates="entries")

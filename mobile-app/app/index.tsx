@@ -11,7 +11,7 @@ export default function App() {
 
     // if (!isLoading && isLogged) return <Redirect href="/home" />;
 
-    <Redirect href="/create" />;
+    <Redirect href="/profile" />;
 
     return (
         <SafeAreaProvider className='bg-primary h-full'>
