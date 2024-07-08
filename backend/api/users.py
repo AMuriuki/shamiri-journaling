@@ -10,7 +10,7 @@ users = Blueprint("users", __name__)
 user_schema = UserSchema()
 
 
-@users.route("/users/<int:id>", methods=["GET"])
+@users.route("/user/<int:id>", methods=["GET"])
 @authenticate(token_auth)
 @response(user_schema)
 @other_responses({404: "User not found"})

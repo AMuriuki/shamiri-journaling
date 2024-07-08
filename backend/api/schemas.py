@@ -75,7 +75,7 @@ class CategorySchema(ma.SQLAlchemySchema):
     id = ma.auto_field(dump_only=True)
     url = ma.String(dump_only=True)
     title = ma.auto_field(required=True, validate=validate.Length(min=1, max=280))
-    entries_url = ma.URLFor("entries.user_all", values={"id": "<id>"}, dump_only=True)
+    # entries_url = ma.URLFor("entries.user_all", values={"id": "<id>"}, dump_only=True)
 
 
 class EntrySchema(ma.SQLAlchemySchema):
