@@ -64,6 +64,7 @@ const SignUp = () => {
             value={form.username}
             handleTextChange={(e) => setForm({ ...form, username: e })}
             otherStyles='mt-10'
+            fieldType='input'
           />
           <FormField
             title='Email'
@@ -71,12 +72,14 @@ const SignUp = () => {
             handleTextChange={(e) => setForm({ ...form, email: e })}
             otherStyles='mt-10'
             keyboardType='email-address'
+            fieldType='input'
           />
           <FormField
             title='Password'
             value={form.password}
             handleTextChange={(e) => setForm({ ...form, password: e })}
             otherStyles='mt-10'
+            fieldType='input'
           />
           <CustomButton
             title='Sign Up'
