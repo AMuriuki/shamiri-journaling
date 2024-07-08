@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import secrets
 from typing import Optional
-from flask import current_app
+from flask import current_app, url_for
 import sqlalchemy as sa
 from api import db
 from sqlalchemy import orm as so
@@ -80,7 +80,11 @@ class User(Model):
 
     @property
     def password(self):
-        raise AttributeError("passwordis not a readable attribute")
+        raise AttributeError("password is not a readable attribute")
+    
+    @property
+    def url(self):
+        return url_for('users.get', id=self.id)
 
     @password.setter
     def password(self, password):
@@ -125,3 +129,7 @@ class Entry(Model):
 
     author: so.Mapped["User"] = so.relationship(back_populates="entries")
     category: so.Mapped["Category"] = so.relationship(back_populates="entries")
+
+    @property
+    def url(self):
+        return url_for('entries.get', id=self.id)
