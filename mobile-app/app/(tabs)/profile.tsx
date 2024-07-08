@@ -92,7 +92,7 @@ const Profile = () => {
             <View className="mt-5 flex flex-row">
               <InfoBox
                 title={entries.length.toString() || "0"}
-                subtitle="Posts"
+                subtitle="Entries"
                 titleStyles="text-xl"
               />
             </View>

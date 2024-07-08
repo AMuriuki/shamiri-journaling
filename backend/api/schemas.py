@@ -3,6 +3,10 @@ from api.models import User
 from marshmallow import validate, validates, ValidationError
 
 
+class EmptySchema(ma.Schema):
+    pass
+
+
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:
         model = User

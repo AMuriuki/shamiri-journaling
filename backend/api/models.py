@@ -60,6 +60,13 @@ class Token(Model):
         except jwt.PyJWTError:
             pass
 
+    def expire(self, delay=None):
+        if delay is None:  # pragma: no branch
+            # 5 second delay to allow simultaneous requests
+            delay = 5 if not current_app.testing else 0
+        self.access_expiration = naive_utcnow() + timedelta(seconds=delay)
+        self.refresh_expiration = naive_utcnow() + timedelta(seconds=delay)
+
 
 class User(Model):
     __tablename__ = "users"
