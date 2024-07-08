@@ -13,4 +13,5 @@ export interface UserContextType {
     isLogged: boolean;
     setIsLogged: (isLogged: boolean) => void;
     isLoading: boolean;
+    logout: () => Promise<void>;
 }

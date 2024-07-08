@@ -9,7 +9,8 @@ const UserContext = createContext<UserContextType>({
     login: async () => "",
     isLogged: false,
     setIsLogged: () => { },
-    isLoading: true
+    isLoading: true,
+    logout: async () => { }
 });
 
 export default function UserProvider({ children }: { children: ReactNode }) {
@@ -45,6 +46,11 @@ export default function UserProvider({ children }: { children: ReactNode }) {
         return result;
     }, [api]);
 
+    const logout = useCallback(async () => {
+        await api.logout();
+        setUser(null);
+    }, [api]);
+
     return (
         <UserContext.Provider value={{
             user,
@@ -52,7 +58,8 @@ export default function UserProvider({ children }: { children: ReactNode }) {
             login,
             isLogged,
             setIsLogged,
-            isLoading
+            isLoading,
+            logout
         }}>
             {children}
         </UserContext.Provider>
