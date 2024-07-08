@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { Image, ScrollView, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import images from '@/constants/images';
 import CustomButton from '@/components/customButton';
+import { useUser } from '@/contexts/UserProvider';
 
 export default function App() {
+    const { isLoading, isLogged } = useUser();
+
+    if (!isLoading && isLogged) return <Redirect href="/home" />;
     return (
         <SafeAreaProvider className='bg-primary h-full'>
             <ScrollView

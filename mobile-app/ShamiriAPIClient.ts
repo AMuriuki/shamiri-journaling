@@ -1,7 +1,7 @@
 import { APIResponseType, ErrorHandlerType, ErrorResponse, RequestOptionsType } from "./types/APIClient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_API_URL = "https://c1cc-105-163-157-208.ngrok-free.app";
+const BASE_API_URL = "https://66ff-105-163-157-208.ngrok-free.app";
 
 export default class ShamiriAPIClient {
     private base_url: string;
