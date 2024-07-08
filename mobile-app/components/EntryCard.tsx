@@ -10,7 +10,12 @@ const EntryCard: React.FC<EntryCardProps> = ({ title, content, category, date })
                 <Text className='text-gray-400 text-sm'>{date}</Text>
             </View>
             <View className='mb-2'>
-                <Text className='text-base text-white'>{content}</Text>
+                <Text
+                    className='text-base text-white'
+                    numberOfLines={2}
+                >
+                    {content}
+                </Text>
             </View>
             <View className='flex flex-row items-center'>
                 <Text className='text-gray-400 text-sm'>{category}</Text>

@@ -1,13 +1,19 @@
 import { View, Text, FlatList, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import images from '@/constants/images';
 import EmptyState from '@/components/EmptyState';
 import EntryCard from '@/components/EntryCard';
-import { EntryType } from '@/types/Entry';
+import { CategoryType, EntryType } from '@/types/Entry';
+import CategoryCard from '@/components/CategoryCard';
+import { useUser } from '@/contexts/UserProvider';
 
 
 const Home = () => {
+  const { user } = useUser();
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const entries: EntryType[] = [
     {
       id: 1,
@@ -46,10 +52,43 @@ const Home = () => {
     },
   ];
 
+  const categories: CategoryType[] = [
+    {
+      id: 1,
+      title: "Wellness"
+    },
+    {
+      id: 2,
+      title: "Social"
+    },
+    {
+      id: 3,
+      title: "Work"
+    },
+    {
+      id: 4,
+      title: "Outdoors"
+    },
+    {
+      id: 5,
+      title: "Family"
+    }
+  ]
+
+  const filteredEntries = selectedCategory ? entries.filter(entry => entry.category === selectedCategory) : entries;
+
+  const handleSelectCategory = (category: string) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category)
+    }
+  }
+
   return (
     <SafeAreaView className='bg-primary h-full'>
       <FlatList
-        data={entries}
+        data={filteredEntries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <EntryCard
@@ -61,14 +100,14 @@ const Home = () => {
           />
         )}
         ListHeaderComponent={() => (
-          <View className='my-6 px-4 space-y-6'>
+          <View className='flex my-6 px-4 space-y-6'>
             <View className='flex justify-between items-start flex-row mb-6'>
               <View>
                 <Text className='font-pmedium text-sm text-gray-100'>
                   Welcome Back
                 </Text>
                 <Text className='text-2xl font-psemibold text-white'>
-                  Nderitu Muriuki
+                  {user ? user.username : ""}
                 </Text>
               </View>
               <View className='mt-1.5'>
@@ -78,6 +117,16 @@ const Home = () => {
                   resizeMode='contain'
                 />
               </View>
+            </View>
+            <View className="w-full flex-1 pt-5 pb-8">
+              <Text className="text-lg font-pregular text-gray-100 mb-3">
+                Categories
+              </Text>
+              <CategoryCard
+                categories={categories}
+                onSelectCategory={handleSelectCategory}
+                selectedCategory={selectedCategory}
+              />
             </View>
           </View>
         )}

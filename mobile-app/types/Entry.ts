@@ -12,3 +12,14 @@ export interface EntryCardProps {
     category: string;
     date: string;
 }
+
+export type CategoryType = {
+    id: number;
+    title: string;
+}
+
+export interface CategoryCardProps {
+    categories: CategoryType[];
+    onSelectCategory: (category: string) => void;
+    selectedCategory: string | null;
+}
