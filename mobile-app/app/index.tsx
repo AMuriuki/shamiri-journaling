@@ -8,6 +8,7 @@ import { useUser } from '@/contexts/UserProvider';
 
 export default function App() {
     const { isLoading, isLogged } = useUser();
+    console.log(isLoading, isLogged);
 
     if (!isLoading && isLogged) return <Redirect href="/home" />;
     return (
