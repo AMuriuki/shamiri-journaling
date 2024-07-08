@@ -27,6 +27,7 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
     }
 
     const handleSelectChange = (value: string) => {
+        handleTextChange(value);
         const _selectedCategory = options.find((item: any) => item.id === value);
         setSelectedCategory(_selectedCategory ? _selectedCategory.title : null);
     }
