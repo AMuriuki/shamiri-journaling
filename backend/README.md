@@ -84,17 +84,22 @@ GRANT ALL PRIVILEGES ON DATABASE 'your-database-name' TO 'your-user';
 DATABASE_URL=postgresql+psycopg2://{user-created-in-postgres}:{password-you-created}@localhost:5432/{database-name}
 ```
 
-### 2. Seed the DB
+### 2. Run DB Migrations
+```sh
+$ alembic upgrade head
+```
+
+### 3. Seed the DB
 ```sh
 $ flask seed categories # will seed the DB with journal categories
 ```
 
-### 3. Run unittests
+### 4. Run unittests
 ```sh
 $ python -m unittest discover -s tests
 ```
 
-### 4. Run the backend service
+### 5. Run the backend service
 
 - Start the server with the command
 
