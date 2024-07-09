@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, ScrollView, RefreshControl, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ActivityIndicator, ScrollView, RefreshControl, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -47,6 +47,27 @@ const Entry = () => {
     return format(new Date(timestamp), 'MMMM dd, yyyy');
   }
 
+  const handleEdit = () => {
+
+  }
+
+  const handleDelete = async () => {
+    try {
+      const response = await api.delete(`/entry/${query}`);
+      if (response.ok) {
+        Alert.alert('Success', 'Entry deleted successfully', [
+          { text: 'OK', onPress: () => router.back() }
+        ]);
+      } else {
+        Alert.alert('Error', 'Failed to delete entry');
+      }
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+      Alert.alert('Error', 'Failed to delete entry');
+    }
+  };
+
+
   return (
     <SafeAreaView className='bg-white h-full px-4 mt-4'>
       {loading ? (
@@ -87,14 +108,20 @@ const Entry = () => {
           </ScrollView>
           <View className='absolute bottom-6 left-0 right-0 flex-row justify-center px-4'>
             <View className='flex-row bg-white border border-primary rounded-3xl p-3'>
-              <TouchableOpacity className='mx-4'>
+              <TouchableOpacity
+                className='mx-4'
+                onPress={handleEdit}
+              >
                 <Image
                   source={icons.edit}
                   className='w-6 h-6'
                   resizeMode='contain'
                 />
               </TouchableOpacity>
-              <TouchableOpacity className='mx-4'>
+              <TouchableOpacity
+                className='mx-4'
+                onPress={handleDelete}
+              >
                 <Image
                   source={icons.del}
                   className='w-6 h-6'
