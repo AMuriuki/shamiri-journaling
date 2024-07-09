@@ -10,11 +10,19 @@ import { EntryType } from "@/types/Entry";
 import { useCallback, useState } from "react";
 import { useApi } from "@/contexts/ApiProvider";
 import { useFocusEffect } from "@react-navigation/native";
+import FormField from "@/components/formField";
+import CustomButton from "@/components/customButton";
 
 const Profile = () => {
+  
   const [entries, setEntries] = useState<EntryType[]>([]);
   const [loading, setLoading] = useState(true);
-  
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const { user, setIsLogged, logout } = useUser();
   const api = useApi();
 
@@ -44,14 +52,18 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <SafeAreaProvider className='bg-primary h-full flex justify-center items-center'>
-        <ActivityIndicator size="large" color="#fff" />
+      <SafeAreaProvider className='bg-white h-full flex justify-center items-center'>
+        <ActivityIndicator size="large" color="#000" />
       </SafeAreaProvider>
     )
   }
 
+  const submit = async () => {
+
+  }
+
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       <FlatList
         data={entries}
         keyExtractor={(item) => item.id.toString()}
@@ -91,6 +103,29 @@ const Profile = () => {
                 titleStyles="text-xl"
               />
             </View>
+
+            <FormField
+              title="Username"
+              value={form.username}
+              handleTextChange={(e) => setForm({ ...form, username: e })}
+              otherStyles='mt-10'
+              fieldType='input'
+            />
+
+            <FormField
+              title="Password"
+              value={form.password}
+              handleTextChange={(e) => setForm({ ...form, password: e })}
+              otherStyles='mt-10'
+              fieldType='input'
+            />
+
+            <CustomButton
+              title='Update Profile'
+              handlePress={submit}
+              containerStyles='mt-7 w-full'
+              isLoading={isSubmitting}
+            />
           </View>
         )}
       />

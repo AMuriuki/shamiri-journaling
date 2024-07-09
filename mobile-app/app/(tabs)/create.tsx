@@ -39,13 +39,6 @@ const Create = () => {
 
     setIsSubmitting(true);
 
-    console.log({
-      title: form.title,
-      category_id: form.category,
-      timestamp: form.date.toISOString(),
-      content: form.content
-    })
-
     const response = await api.post("/entries", {
       title: form.title,
       category_id: form.category,
@@ -74,9 +67,9 @@ const Create = () => {
   }
 
   return (
-    <SafeAreaView className='bg-primary h-full'>
+    <SafeAreaView className='bg-white h-full'>
       <ScrollView className='px-4 my-6'>
-        <Text className='text-2xl text-white font-psemibold'>
+        <Text className='text-2xl text-primary font-psemibold'>
           Create an Entry
         </Text>
 

@@ -34,16 +34,16 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
 
     return (
         <View className={`space-y-2 ${otherStyles}`}>
-            <Text className='text-base text-gray-100 font-pmedium'>{title}</Text>
+            <Text className='text-base text-gray-500 font-pmedium'>{title}</Text>
 
             {fieldType === "select" && (
                 <>
-                    <View className='w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary'>
+                    <View className='w-full h-16 px-4 rounded-2xl border-2 border-gray-100 focus:border-secondary'>
                         <Picker
                             selectedValue={value}
                             onValueChange={handleSelectChange}
-                            style={{ color: 'white' }}
-                            dropdownIconColor="white"
+                            style={{ color: 'black' }}
+                            dropdownIconColor="black"
                         >
                             <Picker.Item label='Select a category' value="" />
                             {options.map((item: any) => (
@@ -52,7 +52,7 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
                         </Picker>
                     </View>
                     {selectedCategory && (
-                        <Text className='mt-3 text-white font-sm font-psemibold'>
+                        <Text className='mt-3 text-primary font-sm font-psemibold'>
                             Selected Category: {selectedCategory}
                         </Text>
                     )}
@@ -61,8 +61,8 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
 
             {fieldType === "date" && (
                 <>
-                    <View className='w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary flex flex-row items-center'>
-                        <Text className='flex-1 text-white font-psemibold text-base'>
+                    <View className='w-full h-16 px-4 rounded-2xl border-2 border-gray-100 focus:border-secondary flex flex-row items-center'>
+                        <Text className='flex-1 text-primary font-psemibold text-base'>
                             {value ? new Date(value).toDateString() : 'Select a date'}
                         </Text>
                         <Button title='Select Date' onPress={() => setShowDatePicker(true)} />
@@ -80,9 +80,9 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
 
             {fieldType === "input" && (
                 <>
-                    <View className='w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 focus:border-secondary flex flex-row items-center'>
+                    <View className='w-full h-16 px-4 rounded-2xl border-2 border-gray-100 focus:border-secondary flex flex-row items-center'>
                         <TextInput
-                            className='flex-1 text-white font-psemibold text-base'
+                            className='flex-1 text-primary font-psemibold text-base'
                             value={value}
                             placeholder={placeHolder}
                             placeholderTextColor='#7B7B8B'
@@ -103,7 +103,7 @@ const FormField: React.FC<FormFieldProps> = ({ title, value, placeHolder, handle
                         )}
                     </View>
                     {maxLength && inputValue.length > 0 && (
-                        <Text className='text-sm text-gray-100 fontpmedium'>
+                        <Text className='text-sm text-gray-300 fontpmedium'>
                             {remainingChars} characters remaining
                         </Text>
                     )}

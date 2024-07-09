@@ -7,6 +7,7 @@ import CustomButton from '@/components/customButton'
 import { Link, router } from 'expo-router'
 import { useApi } from "../../contexts/ApiProvider";
 import { extractErrorMessages } from '@/ShamiriAPIClient'
+import { StatusBar } from 'expo-status-bar'
 
 const SignUp = () => {
 
@@ -43,7 +44,7 @@ const SignUp = () => {
   }
 
   return (
-    <SafeAreaView className='bg-primary h-full'>
+    <SafeAreaView className='bg-white h-full'>
       <ScrollView>
         <View
           className='w-full flex justify-center h-full px-4 my-6'
@@ -52,12 +53,12 @@ const SignUp = () => {
           }}
         >
           <Image
-            source={images.logo}
+            source={images.logoDark}
             resizeMode='contain'
             className='w-[115px] h-[34px]'
           />
-          <Text className='text-2xl font-semibold text-white mt-10 font-psemibold'>
-            Sign Up to Shamiri
+          <Text className='text-2xl font-semibold text-primary mt-10 font-psemibold'>
+            Sign up to Shamiri
           </Text>
           <FormField
             title='Username'
@@ -88,7 +89,7 @@ const SignUp = () => {
             isLoading={isSubmitting}
           />
           <View className='flex justify-center pt-5 flex-row gap-2'>
-            <Text className='text-lg text-gray-100 font-pregular'>
+            <Text className='text-lg text-gray-500 font-pregular'>
               Already have an account?
             </Text>
             <Link href="/signIn" className='text-lg font-psemibold text-secondary'>
@@ -97,6 +98,7 @@ const SignUp = () => {
           </View>
         </View>
       </ScrollView>
+      <StatusBar backgroundColor='#fff' style='dark' />
     </SafeAreaView>
   )
 }

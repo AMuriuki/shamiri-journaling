@@ -12,7 +12,7 @@ export default function App() {
     if (!isLoading && isLogged) return <Redirect href="/home" />;
 
     return (
-        <SafeAreaProvider className='bg-primary h-full'>
+        <SafeAreaProvider className='bg-white h-full'>
             <ScrollView
                 contentContainerStyle={{
                     height: "100%"
@@ -20,7 +20,7 @@ export default function App() {
             >
                 <View className='w-full flex justify-center items-center h-full px-4'>
                     <Image
-                        source={images.logo}
+                        source={images.logoDark}
                         className='w-[130px] h-[84px]'
                         resizeMode='contain'
                     />
@@ -30,10 +30,10 @@ export default function App() {
                     />
                     <View className='relative mt-5'>
                         <Text
-                            className='text-3xl text-white font-bold text-center text-pbold'>
+                            className='text-3xl text-primary font-bold text-center text-pbold'>
                             Gratitude Journal
                         </Text>
-                        <Text className='text-sm text-gray-100 font-pregular mt-7 text-center'>
+                        <Text className='text-sm text-gray-500 font-pregular mt-7 text-center'>
                             Keeping a log of what you're thankful for can lower stress, help you sleep better, and may even reduce the risk of heart disease
                         </Text>
                     </View>
@@ -44,7 +44,7 @@ export default function App() {
                     />
                 </View>
             </ScrollView>
-            <StatusBar backgroundColor='#161622' style='light' />
+            <StatusBar backgroundColor='#fff' style='dark' />
         </SafeAreaProvider>
     )
 }

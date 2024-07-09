@@ -12,10 +12,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({ title, subtitle }) => {
                 className="w-[270px] h-[216px]"
                 resizeMode="contain"
             />
-            <Text className="text-xl text-center font-psemibold text-white mt-2">
+            <Text className="text-xl text-center font-psemibold text-primary mt-2">
                 {title}
             </Text>
-            <Text className="text-sm font-pmedium text-gray-100">
+            <Text className="text-sm font-pmedium text-gray-500">
                 {subtitle}
             </Text>
             <CustomButton

@@ -12,10 +12,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ categories, onSelectCategor
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    className={`bg-gray-800 rounded-lg p-4 mr-4 ${selectedCategory === item.title ? 'bg-secondary' : 'bg-gray-800'}`}
+                    className={`rounded-lg p-4 mr-4 ${selectedCategory === item.title ? 'bg-secondary' : 'border'}`}
                     onPress={() => onSelectCategory(item.title)}
                 >
-                    <Text className="text-white font-semibold">{item.title}</Text>
+                    <Text className="text-primary font-semibold">{item.title}</Text>
                 </TouchableOpacity>
             )}
             showsHorizontalScrollIndicator={false}

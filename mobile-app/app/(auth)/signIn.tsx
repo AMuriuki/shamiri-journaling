@@ -6,6 +6,7 @@ import FormField from '@/components/formField'
 import CustomButton from '@/components/customButton'
 import { Link, router } from 'expo-router'
 import { useUser } from '@/contexts/UserProvider'
+import { StatusBar } from 'expo-status-bar'
 
 const SignIn = () => {
 
@@ -38,20 +39,17 @@ const SignIn = () => {
   }
 
   return (
-    <SafeAreaView className='bg-primary h-full'>
+    <SafeAreaView className='bg-white h-full'>
       <ScrollView>
         <View
           className='w-full flex justify-center h-full px-4 my-6'
-          style={{
-            minHeight: Dimensions.get('window').height - 100,
-          }}
         >
           <Image
-            source={images.logo}
+            source={images.logoDark}
             resizeMode='contain'
             className='w-[115px] h-[34px]'
           />
-          <Text className='text-2xl font-semibold text-white mt-10 font-psemibold'>
+          <Text className='text-2xl font-semibold text-primary mt-10 font-psemibold'>
             Log in to Shamiri
           </Text>
           <FormField
@@ -76,7 +74,7 @@ const SignIn = () => {
             isLoading={isSubmitting}
           />
           <View className='flex justify-center pt-5 flex-row gap-2'>
-            <Text className='text-lg text-gray-100 font-pregular'>
+            <Text className='text-lg text-gray-500 font-pregular'>
               Don't have an account?
             </Text>
             <Link href="/signUp" className='text-lg font-psemibold text-secondary'>
@@ -85,6 +83,7 @@ const SignIn = () => {
           </View>
         </View>
       </ScrollView>
+      <StatusBar backgroundColor='#fff' style='dark' />
     </SafeAreaView>
   )
 }
