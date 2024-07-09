@@ -21,7 +21,6 @@ update_entry_schema = EntrySchema(partial=True)
 @response(entry_schema, 201)
 def new(args):
     """Create a new post"""
-    print("!!!!!", args)
     user = token_auth.current_user()
     entry = Entry(author=user, **args)
     db.session.add(entry)
@@ -79,3 +78,16 @@ def category_all(id):
     """Retrieve all entries for a category"""
     category = db.session.get(Category, id) or abort(404)
     return category.entries.select()
+
+
+@entries.route("/entry/<int:id>", methods=["DELETE"])
+@authenticate(token_auth)
+@other_responses({403: "Not allowed to delete the entry"})
+def delete(id):
+    """Delete an entry"""
+    entry = db.session.get(Entry, id) or abort(404)
+    if entry.author != token_auth.current_user():
+        abort(403)
+    db.session.delete(entry)
+    db.session.commit()
+    return "", 204

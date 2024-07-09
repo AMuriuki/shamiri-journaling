@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from config import Config
 from apifairy import APIFairy
 from alchemical.flask import Alchemical
@@ -38,5 +38,9 @@ def create_app(config_class=Config):
     from api.seed import seed
 
     app.register_blueprint(seed)
+
+    @app.route("/")
+    def index():  # pragma: no cover
+        return redirect(url_for("apifairy.docs"))
 
     return app

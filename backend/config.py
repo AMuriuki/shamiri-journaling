@@ -18,3 +18,9 @@ class Config:
     ACCESS_TOKEN_MINUTES = int(os.environ.get("ACCESS_TOKEN_MINUTES") or "60")
     REFRESH_TOKEN_DAYS = int(os.environ.get("REFRESH_TOKEN_DAYS") or "7")
     SECRET_KEY = os.environ.get('SECRET_KEY', 'top-secret!')
+
+    # API Documentation
+    APIFAIRY_TITLE = 'Shamiri API'
+    APIFAIRY_VERSION = '1.0'
+    APIFAIRY_UI = os.environ.get('DOCS_UI', 'elements')
+    # APIFAIRY_TAGS = ['tokens', 'users', 'posts']
