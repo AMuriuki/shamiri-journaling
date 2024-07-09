@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Button, Alert } from 'react-native'
-import React, { useState } from 'react'
+import { Text, ScrollView, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '@/components/formField'
 import { CategoryType } from '@/types/Entry'
@@ -8,31 +8,20 @@ import { useApi } from '@/contexts/ApiProvider'
 import { router } from 'expo-router'
 
 const Create = () => {
-
-  const categories: CategoryType[] = [
-    {
-      id: 1,
-      title: "Wellness"
-    },
-    {
-      id: 2,
-      title: "Social"
-    },
-    {
-      id: 3,
-      title: "Work"
-    },
-    {
-      id: 4,
-      title: "Outdoors"
-    },
-    {
-      id: 5,
-      title: "Family"
-    }
-  ]
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const api = useApi();
+
+  useEffect(() => {
+    (async () => {
+      const categoriesResponse = await api.get('/categories');
+      if (categoriesResponse.ok) {
+        setCategories(categoriesResponse.body.data);
+      } else {
+        setCategories([]);
+      }
+    })();
+  }, [api]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -43,8 +32,6 @@ const Create = () => {
     content: ""
   });
 
-  console.log(form);
-
   const submit = async () => {
     if (form.title === "" || form.category === "" || form.content === "") {
       return Alert.alert("Please provide all fields");
@@ -54,8 +41,8 @@ const Create = () => {
 
     const response = await api.post("/entries", {
       title: form.title,
-      category: form.category,
-      date: form.date,
+      category_id: form.category,
+      timestamp: form.date.toDateString,
       content: form.content
     });
 
@@ -123,13 +110,14 @@ const Create = () => {
           numberOfLines={4}
           fieldType='input'
         />
+
+        <CustomButton
+          title="Publish Entry"
+          handlePress={submit}
+          containerStyles="mt-7"
+          isLoading={isSubmitting}
+        />
       </ScrollView>
-      <CustomButton
-        title="Publish Entry"
-        handlePress={submit}
-        containerStyles="mt-7"
-        isLoading={isSubmitting}
-      />
     </SafeAreaView>
   )
 }

@@ -36,47 +36,7 @@ const Home = () => {
     })();
   }, [api, user]);
 
-  console.log(entries, categories);
-
-  // const entries: EntryType[] = [
-  //   {
-  //     id: 1,
-  //     title: "Morning Meditation",
-  //     content: "Started the day with a calming meditation session. Felt more focused and centered afterwards.",
-  //     category: "Wellness",
-  //     date: "2024-07-08",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Lunch with Friends",
-  //     content: "Had a delightful lunch with friends at a new restaurant downtown. Enjoyed catching up and laughing together.",
-  //     category: "Social",
-  //     date: "2024-07-07",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Coding Breakthrough",
-  //     content: "Finally solved a complex bug that had been elusive for days. Celebrating this victory!",
-  //     category: "Work",
-  //     date: "2024-07-06",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Nature Walk",
-  //     content: "Took a peaceful walk in the park surrounded by lush greenery. It was refreshing and rejuvenating.",
-  //     category: "Outdoors",
-  //     date: "2024-07-05",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Movie Night",
-  //     content: "Watched a classic movie with family. Enjoyed popcorn and laughter throughout the night.",
-  //     category: "Family",
-  //     date: "2024-07-04",
-  //   },
-  // ];
-
-  const filteredEntries = selectedCategory ? entries.filter(entry => entry.category === selectedCategory) : entries;
+  const filteredEntries = selectedCategory ? entries.filter(entry => entry.category.title === selectedCategory) : entries;
 
   const handleSelectCategory = (category: string) => {
     if (selectedCategory === category) {
@@ -96,7 +56,7 @@ const Home = () => {
             key={item.id}
             title={item.title}
             content={item.content}
-            category={item.category}
+            category={item.category.title}
             date={item.date}
           />
         )}

@@ -88,7 +88,8 @@ class EntrySchema(ma.SQLAlchemySchema):
     url = ma.String(dump_only=True)
     content = ma.auto_field(required=True, validate=validate.Length(min=1))
     title = ma.auto_field(required=True, validate=validate.Length(min=1, max=280))
-    timestamp = ma.auto_field(dump_only=True)
+    category_id = ma.auto_field()
+    timestamp = ma.auto_field()
     category = ma.Nested(CategorySchema, dump_only=True)
     author = ma.Nested(UserSchema, dump_only=True)
 

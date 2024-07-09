@@ -2,7 +2,10 @@ export type EntryType = {
     id: number;
     title: string;
     content: string;
-    category: string;
+    category: {
+        id: number;
+        title: string;
+    };
     date: string;
 }
 

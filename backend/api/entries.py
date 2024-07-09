@@ -15,6 +15,20 @@ categories_schema = CategorySchema(many=True)
 update_entry_schema = EntrySchema(partial=True)
 
 
+@entries.route("/entries", methods=["POST"])
+@authenticate(token_auth)
+@body(entry_schema)
+@response(entry_schema, 201)
+def new(args):
+    """Create a new post"""
+    print("!!!!!", args)
+    user = token_auth.current_user()
+    entry = Entry(author=user, **args)
+    db.session.add(entry)
+    db.session.commit()
+    return entry
+
+
 @entries.route("/entry/<int:id>", methods=["GET"])
 @authenticate(token_auth)
 @response(entry_schema)
