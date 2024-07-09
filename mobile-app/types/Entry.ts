@@ -6,14 +6,16 @@ export type EntryType = {
         id: number;
         title: string;
     };
-    date: string;
+    timestamp: string;
 }
 
 export interface EntryCardProps {
+    id: number;
     title: string;
     content: string;
     category: string;
     date: string;
+    onLongPress: (id: number) => void;
 }
 
 export type CategoryType = {

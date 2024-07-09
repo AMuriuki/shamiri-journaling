@@ -89,7 +89,7 @@ class EntrySchema(ma.SQLAlchemySchema):
     content = ma.auto_field(required=True, validate=validate.Length(min=1))
     title = ma.auto_field(required=True, validate=validate.Length(min=1, max=280))
     category_id = ma.auto_field()
-    timestamp = ma.auto_field()
+    timestamp = ma.auto_field(required=True)
     category = ma.Nested(CategorySchema, dump_only=True)
     author = ma.Nested(UserSchema, dump_only=True)
 

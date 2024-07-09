@@ -121,7 +121,7 @@ class Entry(Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     content: so.Mapped[str] = so.mapped_column(sa.Text())
     title: so.Mapped[str] = so.mapped_column(sa.String(120))
-    timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=naive_utcnow)
+    timestamp: so.Mapped[datetime] = so.mapped_column(index=True)
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
     category_id: so.Mapped[int] = so.mapped_column(
         sa.ForeignKey(Category.id), index=True

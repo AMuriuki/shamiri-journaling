@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Image, ActivityIndicator, Alert } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import images from '@/constants/images';
@@ -9,6 +9,7 @@ import CategoryCard from '@/components/CategoryCard';
 import { useUser } from '@/contexts/UserProvider';
 import { useApi } from '@/contexts/ApiProvider';
 import { useFocusEffect } from '@react-navigation/native';
+import { router } from 'expo-router';
 
 
 const Home = () => {
@@ -23,7 +24,6 @@ const Home = () => {
   const fetchEntriesAndCategories = async () => {
     const entriesResponse = await api.get(`/user/${user?.id}/entries`);
     if (entriesResponse.ok) {
-      console.log(entriesResponse.body.data);
       setEntries(entriesResponse.body.data);
     } else {
       setEntries([]);
@@ -64,6 +64,36 @@ const Home = () => {
     )
   }
 
+  const handleLongPress = (id: number) => {
+    Alert.alert(
+      'Options',
+      'Choose an option',
+      [
+        {
+          text: 'Edit',
+          onPress: () => handleEditEntry(id),
+        },
+        {
+          text: 'Delete',
+          onPress: () => handleDeleteEntry(id),
+          style: 'destructive'
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        }
+      ],
+      { cancelable: true }
+    )
+  }
+
+  const handleEditEntry = (id: number) => {
+  }
+
+  const handleDeleteEntry = (id: number) => {
+
+  }
+
   return (
     <SafeAreaView className='bg-primary h-full'>
       <FlatList
@@ -72,10 +102,12 @@ const Home = () => {
         renderItem={({ item }) => (
           <EntryCard
             key={item.id}
+            id={item.id}
             title={item.title}
             content={item.content}
             category={item.category.title}
-            date={item.date}
+            date={item.timestamp}
+            onLongPress={handleLongPress}
           />
         )}
         ListHeaderComponent={() => (

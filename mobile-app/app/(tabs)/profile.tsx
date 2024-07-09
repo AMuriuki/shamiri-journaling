@@ -1,15 +1,22 @@
 import { router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { View, Image, FlatList, TouchableOpacity, ActivityIndicator } from "react-native";
 
 import icons from "@/constants/icons";
 import InfoBox from "@/components/InfoBox"
 import EmptyState from "@/components/EmptyState";
 import { useUser } from "@/contexts/UserProvider";
 import { EntryType } from "@/types/Entry";
+import { useCallback, useState } from "react";
+import { useApi } from "@/contexts/ApiProvider";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Profile = () => {
-  const { user, setUser, setIsLogged, logout } = useUser();
+  const [entries, setEntries] = useState<EntryType[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  const { user, setIsLogged, logout } = useUser();
+  const api = useApi();
 
   const hanleLogout = async () => {
     setIsLogged(false);
@@ -17,43 +24,31 @@ const Profile = () => {
     router.replace("/signIn");
   };
 
-  const entries: EntryType[] = [
-    {
-      id: 1,
-      title: "Morning Meditation",
-      content: "Started the day with a calming meditation session. Felt more focused and centered afterwards.",
-      category: "Wellness",
-      date: "2024-07-08",
-    },
-    {
-      id: 2,
-      title: "Lunch with Friends",
-      content: "Had a delightful lunch with friends at a new restaurant downtown. Enjoyed catching up and laughing together.",
-      category: "Social",
-      date: "2024-07-07",
-    },
-    {
-      id: 3,
-      title: "Coding Breakthrough",
-      content: "Finally solved a complex bug that had been elusive for days. Celebrating this victory!",
-      category: "Work",
-      date: "2024-07-06",
-    },
-    {
-      id: 4,
-      title: "Nature Walk",
-      content: "Took a peaceful walk in the park surrounded by lush greenery. It was refreshing and rejuvenating.",
-      category: "Outdoors",
-      date: "2024-07-05",
-    },
-    {
-      id: 5,
-      title: "Movie Night",
-      content: "Watched a classic movie with family. Enjoyed popcorn and laughter throughout the night.",
-      category: "Family",
-      date: "2024-07-04",
-    },
-  ];
+  const fetchEntries = async () => {
+    const entriesResponse = await api.get(`/user/${user?.id}/entries`);
+    if (entriesResponse.ok) {
+      setEntries(entriesResponse.body.data);
+    } else {
+      setEntries([]);
+    }
+
+    setLoading(false);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      fetchEntries();
+    }, [user])
+  );
+
+  if (loading) {
+    return (
+      <SafeAreaProvider className='bg-primary h-full flex justify-center items-center'>
+        <ActivityIndicator size="large" color="#fff" />
+      </SafeAreaProvider>
+    )
+  }
 
   return (
     <SafeAreaView className="bg-primary h-full">
