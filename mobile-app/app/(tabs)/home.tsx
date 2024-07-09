@@ -9,7 +9,6 @@ import CategoryCard from '@/components/CategoryCard';
 import { useUser } from '@/contexts/UserProvider';
 import { useApi } from '@/contexts/ApiProvider';
 import { useFocusEffect } from '@react-navigation/native';
-import { router } from 'expo-router';
 
 
 const Home = () => {
