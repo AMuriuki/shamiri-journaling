@@ -1,6 +1,6 @@
-import { View, Text, FlatList, Image } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, FlatList, Image, ActivityIndicator } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import images from '@/constants/images';
 import EmptyState from '@/components/EmptyState';
 import EntryCard from '@/components/EntryCard';
@@ -8,6 +8,7 @@ import { CategoryType, EntryType } from '@/types/Entry';
 import CategoryCard from '@/components/CategoryCard';
 import { useUser } from '@/contexts/UserProvider';
 import { useApi } from '@/contexts/ApiProvider';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const Home = () => {
@@ -17,24 +18,33 @@ const Home = () => {
   const [entries, setEntries] = useState<EntryType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      const entriesResponse = await api.get(`/user/${user?.id}/entries`);
-      if (entriesResponse.ok) {
-        setEntries(entriesResponse.body.data);
-      } else {
-        setEntries([]);
-      }
+  const fetchEntriesAndCategories = async () => {
+    const entriesResponse = await api.get(`/user/${user?.id}/entries`);
+    if (entriesResponse.ok) {
+      console.log(entriesResponse.body.data);
+      setEntries(entriesResponse.body.data);
+    } else {
+      setEntries([]);
+    }
 
-      const categoriesResponse = await api.get('/categories');
-      if (categoriesResponse.ok) {
-        setCategories(categoriesResponse.body.data);
-      } else {
-        setCategories([]);
-      }
-    })();
-  }, [api, user]);
+    const categoriesResponse = await api.get('/categories');
+    if (categoriesResponse.ok) {
+      setCategories(categoriesResponse.body.data);
+    } else {
+      setCategories([]);
+    }
+
+    setLoading(false);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      fetchEntriesAndCategories();
+    }, [user])
+  );
 
   const filteredEntries = selectedCategory ? entries.filter(entry => entry.category.title === selectedCategory) : entries;
 
@@ -44,6 +54,14 @@ const Home = () => {
     } else {
       setSelectedCategory(category)
     }
+  }
+
+  if (loading) {
+    return (
+      <SafeAreaProvider className='bg-primary h-full flex justify-center items-center'>
+        <ActivityIndicator size="large" color="#fff" />
+      </SafeAreaProvider>
+    )
   }
 
   return (

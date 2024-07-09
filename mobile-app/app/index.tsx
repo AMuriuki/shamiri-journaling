@@ -9,9 +9,7 @@ import { useUser } from '@/contexts/UserProvider';
 export default function App() {
     const { isLoading, isLogged } = useUser();
 
-    // if (!isLoading && isLogged) return <Redirect href="/home" />;
-
-    <Redirect href="/profile" />;
+    if (!isLoading && isLogged) return <Redirect href="/home" />;
 
     return (
         <SafeAreaProvider className='bg-primary h-full'>
