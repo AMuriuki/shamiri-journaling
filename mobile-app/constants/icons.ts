@@ -7,6 +7,9 @@ import logout from "../assets/icons/logout.png";
 import backArrow from "../assets/icons/left-arrow.png";
 import edit from "../assets/icons/edit.png";
 import del from "../assets/icons/del.png";
+import save from "../assets/icons/submit.png";
+import cancel from "../assets/icons/cancel.png";
+
 
 export default {
     home,
@@ -17,5 +20,7 @@ export default {
     logout,
     backArrow,
     edit,
-    del
+    del,
+    save,
+    cancel
 };

@@ -10,6 +10,15 @@ import { router } from 'expo-router'
 const Create = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [form, setForm] = useState({
+    title: "",
+    category: "",
+    date: new Date(),
+    content: ""
+  });
+
   const api = useApi();
 
   useEffect(() => {
@@ -22,15 +31,6 @@ const Create = () => {
       }
     })();
   }, [api]);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const [form, setForm] = useState({
-    title: "",
-    category: "",
-    date: new Date(),
-    content: ""
-  });
 
   const submit = async () => {
     if (form.title === "" || form.category === "" || form.content === "") {

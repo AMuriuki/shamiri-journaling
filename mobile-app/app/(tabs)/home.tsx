@@ -41,6 +41,7 @@ const Home = () => {
   useFocusEffect(
     useCallback(() => {
       setLoading(true);
+      setSelectedCategory(null);
       fetchEntriesAndCategories();
     }, [user])
   );
