@@ -1,7 +1,7 @@
 # Backend
 
 ## Project Set-up
-To run this project on your local machine follow these instructions
+To run the backend service on your local machine follow these instructions
 
 ### 1. Clone the repository
 - Clone the repo to your local
@@ -84,7 +84,17 @@ GRANT ALL PRIVILEGES ON DATABASE 'your-database-name' TO 'your-user';
 DATABASE_URL=postgresql+psycopg2://{user-created-in-postgres}:{password-you-created}@localhost:5432/{database-name}
 ```
 
-### 2. Run the backend service
+### 2. Seed the DB
+```sh
+$ flask seed categories # will seed the DB with journal categories
+```
+
+### 3. Run unittests
+```sh
+$ python -m unittest discover -s tests
+```
+
+### 4. Run the backend service
 
 - Start the server with the command
 
@@ -97,5 +107,21 @@ $ flask run
 ```sh
 $ flask run --port=4000
 ```
+
+You can access the API documentation at `http://localhost:{PORT_NUMBER}/docs`
+
+## Setting up Ngrok
+To allow the front-end to access the backend API, you can use Ngrok to expose your local server to the internet. 
+
+Follow these steps:
+
+### 1. Download and install Ngrok:
+Go to [Ngrok's Official Website](https://ngrok.com/), you will need to register a free account, and follow the [installation instructions](https://dashboard.ngrok.com/get-started/setup/linux).
+
+### 2. Start Ngrok
+```sh
+$ ngrok http {PORT_NUMBER}
+```
+
 
 
