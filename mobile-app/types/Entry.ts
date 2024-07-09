@@ -15,7 +15,6 @@ export interface EntryCardProps {
     content: string;
     category: string;
     date: string;
-    onLongPress: (id: number) => void;
 }
 
 export type CategoryType = {

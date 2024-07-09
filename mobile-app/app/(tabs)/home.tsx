@@ -63,36 +63,6 @@ const Home = () => {
     )
   }
 
-  const handleLongPress = (id: number) => {
-    Alert.alert(
-      'Options',
-      'Choose an option',
-      [
-        {
-          text: 'Edit',
-          onPress: () => handleEditEntry(id),
-        },
-        {
-          text: 'Delete',
-          onPress: () => handleDeleteEntry(id),
-          style: 'destructive'
-        },
-        {
-          text: 'Cancel',
-          style: 'cancel'
-        }
-      ],
-      { cancelable: true }
-    )
-  }
-
-  const handleEditEntry = (id: number) => {
-  }
-
-  const handleDeleteEntry = (id: number) => {
-
-  }
-
   return (
     <SafeAreaView className='bg-white h-full'>
       <FlatList
@@ -106,7 +76,6 @@ const Home = () => {
             content={item.content}
             category={item.category.title}
             date={item.timestamp}
-            onLongPress={handleLongPress}
           />
         )}
         ListHeaderComponent={() => (

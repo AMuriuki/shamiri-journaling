@@ -4,7 +4,7 @@ import { EntryCardProps } from '@/types/Entry'
 import { format } from 'date-fns';
 import { router } from 'expo-router';
 
-const EntryCard: React.FC<EntryCardProps> = ({ id, title, content, category, date, onLongPress }) => {
+const EntryCard: React.FC<EntryCardProps> = ({ id, title, content, category, date }) => {
     const formattedDate = format(new Date(date), 'MMMM dd, yyyy');
 
     const handleOnPress = (query: number) => {
@@ -13,7 +13,6 @@ const EntryCard: React.FC<EntryCardProps> = ({ id, title, content, category, dat
 
     return (
         <TouchableOpacity
-            onLongPress={() => onLongPress(id)}
             onPress={() => handleOnPress(id)}
             style={{
                 borderWidth: 1,

@@ -52,6 +52,17 @@ const Entry = () => {
   }
 
   const handleDelete = async () => {
+    Alert.alert(
+      'Delete Entry',
+      'Are you sure you want to delete this entry?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', onPress: confirmDelete }
+      ]
+    );
+  };
+
+  const confirmDelete = async () => {
     try {
       const response = await api.delete(`/entry/${query}`);
       if (response.ok) {
