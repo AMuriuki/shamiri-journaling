@@ -44,5 +44,5 @@ To access the backend API, especially if running your app from Expo Go, use the 
 Go to `mobile-app/ShamiriAPIClient.ts` and provide the `BASE_API_URL` variable with Ngrok URL as the value:
 
 ```typescript
-const BASE_API_URL = "https://9994-41-72-216-66.ngrok-free.app
+const BASE_API_URL = "https://9994-41-72-216-66.ngrok-free.app";
 ```
