@@ -2,6 +2,18 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Prerequisites
+Before you begin, ensure you have the following tools installed:
+
+1. **Node.js**: Install the latest version from [Node.js official website](https://nodejs.org/)
+
+2. **Expo CLI**: Install Expo CLI globally using npm:
+```$
+$ npm install -g expo-cli
+```
+
+3. Android Studio: If you plan to run the app on an Android emulator, install [Android Studio](https://developer.android.com/studio). Ensure you have the Android SDK and AVD (Android Virtual Device) set up
+
 ## Get started
 
 1. Install dependencies
